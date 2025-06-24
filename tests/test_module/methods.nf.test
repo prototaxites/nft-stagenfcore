@@ -9,9 +9,9 @@ nextflow_process {
     test("test plugin") {
 
         setup {
-            nfcoreSetup(launchDir)
-            nfcoreInstall(launchDir, ["minimap2/index"])
-            nfcoreLink(launchDir, baseDir)
+            nfcoreSetup("${launchDir}/library/")
+            nfcoreInstall("${launchDir}/library/", ["minimap2/index"])
+            nfcoreLink("${launchDir}/library/", baseDir)
         }
 
         then {
@@ -21,7 +21,7 @@ nextflow_process {
         }
 
         cleanup {
-            nfcoreCleanup(launchDir, baseDir)
+            nfcoreUnlink(baseDir)
         }
 
     }

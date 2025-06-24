@@ -20,6 +20,8 @@ public class Methods {
      * @param libDir The directory path to initialise an nf-core library at
      */
     public static void nfcoreSetup(String libDir) {
+        System.out.println("\n");
+        System.out.println("Creating a temporary nf-core library at " + libDir);
         try {
             // Create modules directory
             File modulesDir = new File(libDir + "/modules");
@@ -44,6 +46,7 @@ public class Methods {
      * @param modules List of module names to install (e.g., ["minimap2/index", "samtools/view"])
      */
     public static void nfcoreInstall(String libDir, List<String> modules) {
+        System.out.println("Installing nf-core modules...");
         for (String module : modules) {
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder(
@@ -64,6 +67,7 @@ public class Methods {
                 }
             }
         }
+        System.out.println("\n\n");
     }
 
     /**
@@ -72,6 +76,7 @@ public class Methods {
      * @param modulesDir The root directory of an nf-core style modules repository
      */
     public static void nfcoreLink(String libDir, String modulesDir) {
+
         try {
             File sourceDir = new File(libDir + "/modules/nf-core");
             File targetDir = new File(modulesDir + "/nf-core");
@@ -80,9 +85,9 @@ public class Methods {
                 targetDir.toPath(),
                 sourceDir.toPath()
             );
-            System.out.println("Successfully created symlink: " + targetDir + " -> " + sourceDir);
+            System.out.println("Linking temporary nf-core library: " + targetDir + " -> " + sourceDir);
         } catch (FileAlreadyExistsException e) {
-            System.out.println("Symlink already exists: " + modulesDir + "/modules/nf-core");
+            System.out.println("Error: Symlink already exists: " + modulesDir + "/nf-core");
         } catch (IOException e) {
             System.err.println("Error creating symlink: " + e.getMessage());
             throw new RuntimeException(e);
@@ -95,6 +100,8 @@ public class Methods {
      * @param modulesDir The base directory path
      */
     public static void nfcoreDeleteLibrary(String libDir) {
+        System.out.println("Deleting temporary nf-core library: " + libDir);
+
         try {
             // Delete modules directory
             File modulesLibDir = new File(libDir + "/modules");
@@ -117,6 +124,8 @@ public class Methods {
      * @param modulesDir The base directory path
      */
     public static void nfcoreUnlink(String modulesDir) {
+        System.out.println("Unlinking temporary nf-core library: " + modulesDir + "/nf-core");
+
         try {
             File nfcoreLink = new File(modulesDir + "/nf-core");
             nfcoreLink.delete();
