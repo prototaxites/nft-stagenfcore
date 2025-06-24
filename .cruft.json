@@ -1,0 +1,29 @@
+{
+  "template": "https://github.com/nvnieuwk/cookiecutter-nftest-plugin",
+  "commit": "25e009a9f88eb3dd628d6658355802bb12b0108a",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "plugin_name": "nft-stagenfcore",
+      "plugin_slug": "nft-stagenfcore",
+      "description": "An nf-test plugin to stage nf-core modules for use in rnon-nf-core repositories",
+      "github_username": "prototaxites",
+      "github_url": "https://github.com/prototaxites/nft-stagenfcore",
+      "github_default_branch": "main",
+      "version": "0.1.0",
+      "license": "MIT",
+      "mkdocs": true,
+      "docsite_url": "https://prototaxites.github.io/nft-stagenfcore",
+      "author_name": "prototaxites",
+      "release_date": "2025-06-24",
+      "year": "2025",
+      "_extensions": [
+        "jinja2_time.TimeExtension",
+        "jinja2_strcase.StrcaseExtension"
+      ],
+      "_template": "https://github.com/nvnieuwk/cookiecutter-nftest-plugin",
+      "_commit": "25e009a9f88eb3dd628d6658355802bb12b0108a"
+    }
+  },
+  "directory": null
+}
