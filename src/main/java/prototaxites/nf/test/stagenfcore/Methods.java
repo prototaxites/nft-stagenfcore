@@ -90,11 +90,11 @@ public class Methods {
     }
 
     /**
-     * Cleanup function to remove created directories and files
+     * Delete the temorary nf-core library
      * @param libDir The launch directory path
      * @param modulesDir The base directory path
      */
-    public static void nfcoreCleanup(String libDir, String modulesDir) {
+    public static void nfcoreDeleteLibrary(String libDir) {
         try {
             // Delete modules directory
             File modulesLibDir = new File(libDir + "/modules");
@@ -107,8 +107,17 @@ public class Methods {
             // Delete modules.json file
             File modulesJson = new File(libDir + "/modules.json");
             modulesJson.delete();
+        } catch (Exception e) {
+            System.err.println("Error during cleanup: " + e.getMessage());
+        }
+    }
 
-            // Delete symlink
+    /**
+     * Cleanup function to remove created directories and files
+     * @param modulesDir The base directory path
+     */
+    public static void nfcoreUnlink(String modulesDir) {
+        try {
             File nfcoreLink = new File(modulesDir + "/nf-core");
             nfcoreLink.delete();
         } catch (Exception e) {

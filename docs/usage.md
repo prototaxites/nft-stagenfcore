@@ -31,20 +31,22 @@ Use the `nfcoreLink()` function to link the library to your module library. This
 setup {
     nfcoreSetup(launchDir)
     nfcoreInstall(["minimap2/index", "minimap2/align"])
-    nfcoreLink(launchDir, baseDir)
+    nfcoreLink(launchDir, "${baseDir}/modules")
 }
 ```
 
 ## Clean up after tests are finished
 
-To clean up the library after tests are finished and remove any symlinks, use the `nfcoreCleanup()` function. It takes as arguments the path to your temporary library, and the path to your modules directory.
+To unlink the temporary library after the test has completed, use the `nfcoreUnlink()` function. It takes the path to your modules directory as an input.
+
+You can also use the `nfcoreDeleteLibrary()` function to remove the temporary library, if desired.
 
 ```groovy
 
 setup {
     nfcoreSetup(launchDir)
     nfcoreInstall(["minimap2/index", "minimap2/align"])
-    nfcoreLink(launchDir, baseDir)
+    nfcoreLink(launchDir, "${baseDir}/modules")
 }
 
 when {
@@ -56,7 +58,9 @@ then {
 }
 
 cleanup {
-    nfcoreCleanup(launchDir, baseDir)
+    nfcoreUnlink("${baseDir}/modules")
+    // optional - you can also delete the library
+    nfcoreDeleteLibrary(launchDir)
 }
 
 ```
