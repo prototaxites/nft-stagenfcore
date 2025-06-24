@@ -18,7 +18,7 @@ In a setup block, run the `nfcoreSetup()` function to initialise an nf-core libr
 
 ```groovy
 setup {
-    nfcoreSetup(launchDir)
+    nfcoreSetup("${launchDir}/library")
 }
 ```
 
@@ -28,8 +28,8 @@ Use the `nfcoreInstall()` function to install nf-core modules. This function tak
 
 ```groovy
 setup {
-    nfcoreSetup(launchDir)
-    nfcoreInstall(launchDir, ["minimap2/index", "minimap2/align"])
+    nfcoreSetup("${launchDir}/library")
+    nfcoreInstall("${launchDir}/library", ["minimap2/index", "minimap2/align"])
 }
 ```
 
@@ -39,9 +39,9 @@ Use the `nfcoreLink()` function to link the library to your module library. This
 
 ```groovy
 setup {
-    nfcoreSetup(launchDir)
-    nfcoreInstall(["minimap2/index", "minimap2/align"])
-    nfcoreLink(launchDir, "${baseDir}/modules")
+    nfcoreSetup("${launchDir}/library")
+    nfcoreInstall("${launchDir}/library", ["minimap2/index", "minimap2/align"])
+    nfcoreLink("${launchDir}/library", "${baseDir}/modules")
 }
 ```
 
@@ -56,9 +56,9 @@ You can also use the `nfcoreDeleteLibrary()` function to remove the temporary li
 ```groovy
 
 setup {
-    nfcoreSetup(launchDir)
-    nfcoreInstall(["minimap2/index", "minimap2/align"])
-    nfcoreLink(launchDir, "${baseDir}/modules")
+    nfcoreSetup("${launchDir}/library")
+    nfcoreInstall("${launchDir}/library", ["minimap2/index", "minimap2/align"])
+    nfcoreLink("${launchDir}/library", "${baseDir}/modules")
 
     run("MINIMAP2_INDEX") {
         script "${baseDir}/modules/nf-core/minimap2/index/main.nf
@@ -77,7 +77,7 @@ then {
 cleanup {
     nfcoreUnlink("${baseDir}/modules")
     // optional - you can also delete the library
-    nfcoreDeleteLibrary(launchDir)
+    nfcoreDeleteLibrary("${launchDir}/library")
 }
 
 ```
