@@ -1,6 +1,16 @@
 # Using nft-stagenfcore
 
-This plugin requires that nf-core tools is installed in order to install modules.
+This plugin requires that nf-core tools is installed in order to install modules. You can install it with one of the following:
+
+```bash
+conda install -c bioconda nf-core
+```
+
+or
+
+```bash
+pip install nf-core
+```
 
 ## Initialise an nf-core library
 
