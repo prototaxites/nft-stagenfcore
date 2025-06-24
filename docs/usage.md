@@ -45,6 +45,8 @@ setup {
 }
 ```
 
+This creates a symlink to the modules directory of your temporary library at `${baseDir}/modules/nf-core`. Using this location, you can refer to the nf-core modules as if they were installed as normal in your tests.
+
 ## Clean up after tests are finished
 
 To unlink the temporary library after the test has completed, use the `nfcoreUnlink()` function. It takes the path to your modules directory as an input.
@@ -57,6 +59,11 @@ setup {
     nfcoreSetup(launchDir)
     nfcoreInstall(["minimap2/index", "minimap2/align"])
     nfcoreLink(launchDir, "${baseDir}/modules")
+
+    run("MINIMAP2_INDEX") {
+        script "${baseDir}/modules/nf-core/minimap2/index/main.nf
+        ...
+    }
 }
 
 when {
