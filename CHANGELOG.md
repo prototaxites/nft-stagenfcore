@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0
+## 0.1.0 - [2025-06-24] - [Ragged Robin]
 
 Initial release of nft-stagenfcore. Adds:
 - `nfcoreSetup()` to initialise a new temporary library
