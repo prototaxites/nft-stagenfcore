@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>nft-stagenfcore</name>
-	<description>An nf-test plugin to stage nf-core modules for use in rnon-nf-core repositories</description>
+	<description>nft-stagenfcore allows you to stage nf-core modules in a temporary library, and link this library to your module library. This allows tests for modules or subworkflows in organisational nf-core-style repositories to depend on nf-core modules, without having to incorporate the nf-core code into the repository.</description>
 	<url>https://github.com/prototaxites/nft-stagenfcore</url>
 
 	<licenses>

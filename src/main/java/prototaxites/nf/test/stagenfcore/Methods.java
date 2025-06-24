@@ -74,7 +74,7 @@ public class Methods {
     public static void nfcoreLink(String libDir, String modulesDir) {
         try {
             File sourceDir = new File(libDir + "/modules/nf-core");
-            File targetDir = new File(modulesDir + "/modules/nf-core");
+            File targetDir = new File(modulesDir + "/nf-core");
 
             Files.createSymbolicLink(
                 targetDir.toPath(),
@@ -109,7 +109,7 @@ public class Methods {
             modulesJson.delete();
 
             // Delete symlink
-            File nfcoreLink = new File(modulesDir + "/modules/nf-core");
+            File nfcoreLink = new File(modulesDir + "/nf-core");
             nfcoreLink.delete();
         } catch (Exception e) {
             System.err.println("Error during cleanup: " + e.getMessage());

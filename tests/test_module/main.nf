@@ -1,12 +1,10 @@
 process TEST_MODULE {
-    input:
-    path(input)
 
     output:
-    path("*.{${input.extension}}"), emit: output
+    path("test.txt"), emit: output
 
     script:
     """
-    cp $input ${input.baseName}.copy.${input.extension}
+    echo "hello!" > test.txt
     """
 }

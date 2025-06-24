@@ -8,18 +8,20 @@ nextflow_process {
 
     test("test plugin") {
 
-        when {
-            process {
-                """
-                input[0] = Channel.of(
-                    // TODO add your test data
-                )
-                """
-            }
+        setup {
+            nfcoreSetup(launchDir)
+            nfcoreInstall(launchDir, ["minimap2/index"])
+            nfcoreLink(launchDir, baseDir)
         }
 
         then {
-            // TODO write your assertions
+            assertAll(
+                { assert path("${baseDir}/nf-core/minimap2/index/main.nf").exists() }
+            )
+        }
+
+        cleanup {
+            nfcoreCleanup(launchDir, baseDir)
         }
 
     }
