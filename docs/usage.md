@@ -35,7 +35,7 @@ setup {
 
 ## Link the library to your modules directory
 
-Use the `nfcoreLink()` function to link the library to your module library. This function takes two arguments, the path passed to `nfcoreSetup()`, and the path to your directory containing modules (e.g. `${baseDir}/modules`):
+Use the `nfcoreLink()` function to link the library to your module library. This function takes two arguments, the path to a temporary library, and the path to your directory containing modules where you want the nf-core modules to be temporarily linked (e.g. `${baseDir}/modules`):
 
 ```groovy
 setup {
@@ -79,5 +79,4 @@ cleanup {
     // optional - you can also delete the library
     nfcoreDeleteLibrary("${launchDir}/library")
 }
-
 ```
