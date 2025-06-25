@@ -1,17 +1,13 @@
 package prototaxites.nf.test.stagenfcore;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
-
-/*
- * Add your custom methods to nf-test
- *
- * @author: prototaxites
- */
 
 public class Methods {
 
@@ -50,13 +46,27 @@ public class Methods {
         for (String module : modules) {
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder(
-                    "bash", "-c", "cd " + libDir + " && nf-core modules install " + module
+                    "bash", "-c", "cd " + libDir + " && nf-core --verbose modules install " + module
                 );
                 Process process = processBuilder.start();
+
+                // Capture stderr from nf-core tools
+                BufferedReader stderrReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+                StringBuilder stderr = new StringBuilder();
+
+                String line;
+                while ((line = stderrReader.readLine()) != null) {
+                    stderr.append(line).append("\n");
+                }
+
                 int exitCode = process.waitFor();
 
+                // Spit out nf-core tools stderr if install fails
                 if (exitCode != 0) {
-                    System.err.println("Error installing module " + module + ": exit code " + exitCode);
+                    System.err.println("Error installing module " + module + ": exit code " + exitCode + "\n");
+                    System.err.println("nf-core tools output: \n");
+                    System.err.println(stderr.toString());
                 } else {
                     System.out.println("Successfully installed module: " + module);
                 }
@@ -67,27 +77,26 @@ public class Methods {
                 }
             }
         }
-        System.out.println("\n\n");
     }
 
     /**
      * Creates a symbolic link from the installed nf-core modules to the base directory
      * @param libDir An nf-core library initialised by nfcoreSetup()
-     * @param modulesDir The root directory of an nf-core style modules repository
+     * @param destination Location to make the library available at
      */
-    public static void nfcoreLink(String libDir, String modulesDir) {
+    public static void nfcoreLink(String libDir, String destination) {
 
         try {
             File sourceDir = new File(libDir + "/modules/nf-core");
-            File targetDir = new File(modulesDir + "/nf-core");
+            File destination_path = new File(destination);
 
             Files.createSymbolicLink(
-                targetDir.toPath(),
+                destination_path.toPath(),
                 sourceDir.toPath()
             );
-            System.out.println("Linking temporary nf-core library: " + targetDir + " -> " + sourceDir);
+            System.out.println("Linking temporary nf-core library: " + destination + " -> " + sourceDir);
         } catch (FileAlreadyExistsException e) {
-            System.out.println("Error: Symlink already exists: " + modulesDir + "/nf-core");
+            System.out.println("Error: Symlink already exists: " + destination);
         } catch (IOException e) {
             System.err.println("Error creating symlink: " + e.getMessage());
             throw new RuntimeException(e);
@@ -104,16 +113,8 @@ public class Methods {
 
         try {
             // Delete modules directory
-            File modulesLibDir = new File(libDir + "/modules");
+            File modulesLibDir = new File(libDir);
             deleteDirectory(modulesLibDir);
-
-            // Delete .nf-core.yml file
-            File nfcoreYml = new File(libDir + "/.nf-core.yml");
-            nfcoreYml.delete();
-
-            // Delete modules.json file
-            File modulesJson = new File(libDir + "/modules.json");
-            modulesJson.delete();
         } catch (Exception e) {
             System.err.println("Error during cleanup: " + e.getMessage());
         }
@@ -121,13 +122,13 @@ public class Methods {
 
     /**
      * Cleanup function to remove created directories and files
-     * @param modulesDir The base directory path
+     * @param destination Symlinked location
      */
-    public static void nfcoreUnlink(String modulesDir) {
-        System.out.println("Unlinking temporary nf-core library: " + modulesDir + "/nf-core");
+    public static void nfcoreUnlink(String destination) {
+        System.out.println("Unlinking temporary nf-core library: " + destination);
 
         try {
-            File nfcoreLink = new File(modulesDir + "/nf-core");
+            File nfcoreLink = new File(destination);
             nfcoreLink.delete();
         } catch (Exception e) {
             System.err.println("Error during cleanup: " + e.getMessage());

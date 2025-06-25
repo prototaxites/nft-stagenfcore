@@ -1,4 +1,4 @@
 moduleName=nft-stagenfcore
-moduleVersion=0.1.0
+moduleVersion=0.2.0
 moduleAuthors=prototaxites
 extensionMethods=prototaxites.nf.test.stagenfcore.Methods
