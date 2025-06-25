@@ -52,14 +52,11 @@ public class Methods {
 
                 // Capture stderr from nf-core tools
                 BufferedReader stderrReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
                 StringBuilder stderr = new StringBuilder();
-
                 String line;
                 while ((line = stderrReader.readLine()) != null) {
                     stderr.append(line).append("\n");
                 }
-
                 int exitCode = process.waitFor();
 
                 // Spit out nf-core tools stderr if install fails
@@ -82,21 +79,20 @@ public class Methods {
     /**
      * Creates a symbolic link from the installed nf-core modules to the base directory
      * @param libDir An nf-core library initialised by nfcoreSetup()
-     * @param destination Location to make the library available at
+     * @param destPath Location to make the library available at
      */
-    public static void nfcoreLink(String libDir, String destination) {
-
+    public static void nfcoreLink(String libDir, String destPath) {
         try {
             File sourceDir = new File(libDir + "/modules/nf-core");
-            File destination_path = new File(destination);
+            File destination = new File(destPath);
 
             Files.createSymbolicLink(
-                destination_path.toPath(),
+                destination.toPath(),
                 sourceDir.toPath()
             );
-            System.out.println("Linking temporary nf-core library: " + destination + " -> " + sourceDir);
+            System.out.println("Linking temporary nf-core library: " + destPath + " -> " + sourceDir);
         } catch (FileAlreadyExistsException e) {
-            System.out.println("Error: Symlink already exists: " + destination);
+            System.out.println("Error: Symlink already exists: " + destPath);
         } catch (IOException e) {
             System.err.println("Error creating symlink: " + e.getMessage());
             throw new RuntimeException(e);
