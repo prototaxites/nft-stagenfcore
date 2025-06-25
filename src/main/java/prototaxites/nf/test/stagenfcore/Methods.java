@@ -118,13 +118,13 @@ public class Methods {
 
     /**
      * Cleanup function to remove created directories and files
-     * @param destination Symlinked location
+     * @param linkPath Symlinked location
      */
-    public static void nfcoreUnlink(String destination) {
-        System.out.println("Unlinking temporary nf-core library: " + destination);
+    public static void nfcoreUnlink(String linkPath) {
+        System.out.println("Unlinking temporary nf-core library: " + linkPath);
 
         try {
-            File nfcoreLink = new File(destination);
+            File nfcoreLink = new File(linkPath);
             nfcoreLink.delete();
         } catch (Exception e) {
             System.err.println("Error during cleanup: " + e.getMessage());
